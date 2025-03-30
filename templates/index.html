@@ -19,7 +19,7 @@
             }
         }
         .slide-up {
-            animation: slideUp 0.35s ease-in-out; /* Reduced duration */
+            animation: slideUp 0.35s ease-in-out; 
         }
         @keyframes slideUp {
             from {
@@ -30,6 +30,17 @@
                 transform: translateY(0);
                 opacity: 1;
             }
+        }
+        /* Button hover effect */
+        .btn-primary:hover {
+            transform: scale(1.01);
+            transition: transform 0.3s ease-in-out;
+        }
+        /* Card hover effect */
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
     </style>
 </head>
