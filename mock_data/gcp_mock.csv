@@ -1,0 +1,4 @@
+instance_id,zone,usage_hours,cost_usd,status
+gce-001,us-central1-a,15,7.50,RUNNING
+gce-002,us-west1-b,0,3.00,TERMINATED
+gce-003,us-central1-a,25,12.00,RUNNING

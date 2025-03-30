@@ -1,0 +1,4 @@
+vm_id,region,usage_hours,cost_usd,status
+vm-001,eastus,20,8.00,running
+vm-002,westus,0,4.50,stopped
+vm-003,eastus,10,6.00,running
