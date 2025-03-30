@@ -38,6 +38,20 @@ def load_azure_data():
 def load_gcp_data():
     return pd.read_csv('mock_data/gcp_mock.csv')
 
+def generate_audit_report(data, platform):
+    total_resources = len(data)
+    running = len(data[data['status'].isin(['running', 'RUNNING'])])
+    stopped = total_resources - running
+    total_usage_hours = data['usage_hours'].sum()
+    total_cost = data['cost_usd'].sum()
+    return {
+        'total_resources': total_resources,
+        'running': running,
+        'stopped': stopped,
+        'total_usage_hours': total_usage_hours,
+        'total_cost': round(total_cost, 2)
+    }
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -82,7 +96,9 @@ def dashboard():
     
     predicted_cost = predict_costs(data)
     suggestions = get_optimization_suggestions(data, platform)
-    return render_template('dashboard.html', platform=platform, chart_data=chart_data, predicted_cost=predicted_cost, suggestions=suggestions)
+    audit_report = generate_audit_report(data, platform)
+    return render_template('dashboard.html', platform=platform, chart_data=chart_data, 
+                         predicted_cost=predicted_cost, suggestions=suggestions, audit_report=audit_report)
 
 @app.route('/metrics')
 def metrics():
