@@ -60,3 +60,44 @@ body {
     margin-bottom: 5px;
     border-radius: 10px;
 }
+
+
+
+/* Audit Report Styling */
+.audit-card {
+    background: linear-gradient(135deg, #ffffff, #f0f8ff); /* Subtle gradient for vibrancy */
+}
+
+.audit-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column for compactness */
+    gap: 10px; /* Tight spacing between items */
+}
+
+.audit-item {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between badge and text */
+}
+
+.audit-item .badge {
+    font-size: 1.2rem; /* Larger icon size */
+    padding: 10px; /* Circular badge padding */
+    border-radius: 50%; /* Round badges */
+    color: white; /* White icons */
+}
+
+.audit-item div {
+    flex-grow: 1; /* Text takes remaining space */
+}
+
+.audit-item strong {
+    font-size: 0.95rem; /* Slightly smaller for fit */
+    color: #1a1a2e; /* Darker text for contrast */
+}
+
+.audit-item p {
+    font-size: 1.1rem; /* Bold numbers stand out */
+    font-weight: bold;
+    color: #333;
+}
