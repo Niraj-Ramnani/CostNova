@@ -1,87 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Code-Nova | Cloud Cost Optimization</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
     <style>
-        /* Custom animations */
-        .fade-in {
-            animation: fadeIn 1s ease-in-out; /* Reduced duration */
+        body{
+            height: 100vh;
+            width: 100vw;
         }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
+      .lead {
+        color: #d5f4e6;
+      }
+
+      .card {
+        border: none;
+        transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        overflow: hidden;
+        border-radius: 20px;
+        min-height: 400px;
+        box-shadow: 0 0 12px 0 rgba(200, 200, 200, 0.4); /* updated lighter pastel shadow */
+        background: linear-gradient(
+          145deg,
+          #d5f4e6,
+          #d5f4e6
+        ); /* updated subtle pastel background */
+
+        @media (max-width: 768px) {
+          min-height: 350px;
+        }
+
+        @media (max-width: 420px) {
+          min-height: 300px;
+        }
+
+        &.card-has-bg {
+          transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+          background-size: 100%;
+          background-repeat: no-repeat;
+          background-position: center center;
+          &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: inherit;
+            -webkit-filter: grayscale(1);
+            -moz-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            filter: grayscale(100%);
+          }
+        }
+        .card-footer {
+          background: none;
+          border-top: none;
+          .media {
+            img {
+              border: solid 3px rgba(173, 216, 230, 0.5); /* pastel blue border */
             }
-            to {
-                opacity: 1;
-            }
+          }
         }
-        .slide-up {
-            animation: slideUp 0.35s ease-in-out; 
+        .card-title {
+          font-weight: 800;
+          color: #6a0dad; /* updated professional blue for titles */
         }
-        @keyframes slideUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .card-meta {
+          color: #4b0082; /* updated muted gray suitable for tech content */
+          text-transform: uppercase;
+          font-weight: 500;
+          letter-spacing: 2px;
         }
-        /* Button hover effect */
-        .btn-primary:hover {
-            transform: scale(1.01);
-            transition: transform 0.3s ease-in-out;
+        .card-body {
+          transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+          background: linear-gradient(
+            145deg,
+            #d5f4e6,
+            #80ced6
+          ); /* updated inverse pastel gradient */
         }
-        /* Card hover effect */
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        &:hover {
+          .card-body {
+            margin-top: 30px;
+            transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+          }
+          cursor: pointer;
+          transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
         }
+        .card-img-overlay {
+          transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+          background: linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(250, 250, 250, 1) 100%
+          );
+        }
+      }
+      .media img {
+        min-height: 100px;
+        min-width: 100px;
+      }
+
+      .fade-in {
+        animation: fadeIn 1s ease-in-out; /* Reduced duration */
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .slide-up {
+        animation: slideUp 0.35s ease-in-out;
+      }
+      @keyframes slideUp {
+        from {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      .main-btn{
+        margin-bottom: 4rem;
+      }
+      /* Button hover effect */
+      .btn-primary:hover {
+        transform: scale(1.01);
+        transition: transform 0.3s ease-in-out;
+      }
+      /* Card hover effect */
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
+
+      /* Improve overall text readability */
+      .card .card-body,
+      .card .card-title,
+      .card .card-meta,
+      .card .card-img-overlay {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fade-in">
-        <div class="container py-2">
-            <a class="navbar-brand fw-bold" href="/">Code-Nova</a>
-            <button class="btn btn-primary ms-auto px-4" onclick="window.location.href='/login'">Login</button>
-        </div>
+      <div class="container py-2">
+        <a class="navbar-brand fw-bold" href="/">Code-Nova</a>
+        <button
+          class="btn btn-primary ms-auto px-4"
+          onclick="window.location.href='/login'"
+        >
+          Login
+        </button>
+      </div>
     </nav>
     <div class="container mt-5 text-center fade-in">
-        <h1 class="display-4 text-primary fw-bold slide-up">Welcome to Code-Nova</h1>
-        <p class="lead text-muted mt-3 slide-up">Empowering your cloud journey with AI-driven cost optimization.</p>
-        <div class="row mt-5 g-4">
-            <div class="col-md-4">
-                <div class="card bg-light shadow-sm h-100 slide-up">
-                    <div class="card-body text-center">
-                        <h3 class="text-success fw-bold">Innovative</h3>
-                        <p class="mt-3">Harness cutting-edge AI to analyze and optimize cloud costs.</p>
-                    </div>
+      <h1 class="display-4 text-primary fw-bold slide-up">
+        Welcome to Code-Nova
+      </h1>
+      <p class="lead text-muted mt-3 slide-up">
+        Empowering your cloud journey with AI-driven cost optimization.
+      </p>
+      <div class="row mt-5 g-4">
+        <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+          <div
+            class="card text-white card-has-bg click-col"
+            style="
+              background-image: url('https://source.unsplash.com/600x400/?technology,cloud');
+              background-size: cover;
+              background-position: center;
+            "
+          >
+            <img
+              class="card-img d-none"
+              src="../assets//aid-model.jpg"
+              alt="AI Model for Cloud Optimization"
+            />
+            <div
+              class="card-img-overlay d-flex flex-column justify-content-between"
+            >
+              <div class="card-body text-white">
+                <small class="card-meta mb-2">Cloud Optimization</small>
+                <h4 class="card-title mt-0 font-weight-bold">
+                  <a class="text-white text-decoration-none" href="#"
+                    >AI Model</a
+                  >
+                </h4>
+                <p class="mt-2">
+                  An AI model predicts future cloud costs, optimizes resource
+                  allocation, and detects unused or oversized instances to
+                  reduce expenses across AWS, Azure, and GCP.
+                </p>
+              </div>
+              <div class="card-footer bg-transparent border-top-0">
+                <div class="media">
+                  <img
+                    class="mr-3 rounded-circle"
+                    src="../assets/ai-model.png"
+                    alt="Tech Expert"
+                    style="max-width: 50px"
+                  />
+                  <div class="media-body">
+                    <h6 class="my-0 text-black">AI Cloud Specialist</h6>
+                  </div>
                 </div>
+              </div>
             </div>
-            <div class="col-md-4">
-                <div class="card bg-light shadow-sm h-100 slide-up">
-                    <div class="card-body text-center">
-                        <h3 class="text-warning fw-bold">Vibrant</h3>
-                        <p class="mt-3">A fresh, dynamic approach to cloud management.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-light shadow-sm h-100 slide-up">
-                    <div class="card-body text-center">
-                        <h3 class="text-info fw-bold">Simple</h3>
-                        <p class="mt-3">Easy-to-use tools for everyone, from startups to enterprises.</p>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        <button class="btn btn-lg btn-primary mt-5 px-5 py-3 slide-up" onclick="window.location.href='/login'">Get Started</button>
+        <div class="col-md-4">
+          <div
+            class="card text-white card-has-bg click-col slide-up"
+            style="
+              background-image: url('https://source.unsplash.com/600x400/?technology,management');
+              background-size: cover;
+              background-position: center;
+            "
+          >
+            <img
+              class="card-img d-none"
+              src="https://source.unsplash.com/600x400/?innovation,tech"
+              alt="Tech Management"
+            />
+            <div
+              class="card-img-overlay d-flex flex-column justify-content-between"
+            >
+              <div class="card-body text-white">
+                <small class="card-meta mb-2">Cloud Management</small>
+                <h4 class="card-title mt-0 font-weight-bold">
+                  <a class="text-white text-decoration-none" href="#"
+                    >Vibrant</a
+                  >
+                </h4>
+                <p class="mt-2">
+                    Supports AWS, Azure, and GCP with a unified dashboard for cost tracking, inefficiency detection, and AI-driven savings recommendations.
+                </p>
+              </div>
+              <div class="card-footer bg-transparent border-top-0">
+                <div class="media">
+                  <img
+                    class="mr-3 rounded-circle"
+                    src="../assets/management.jpg"
+                    alt="Tech Expert"
+                    style="max-width: 50px"
+                  />
+                  <div class="media-body">
+                    <h6 class="my-0 text-black">Cloud Expert</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div
+            class="card text-white card-has-bg click-col slide-up"
+            style="
+              background-image: url('https://source.unsplash.com/600x400/?software,design');
+              background-size: cover;
+              background-position: center;
+            "
+          >
+            <img
+              class="card-img d-none"
+              src="https://source.unsplash.com/600x400/?ui,ux"
+              alt="Simple Tools"
+            />
+            <div
+              class="card-img-overlay d-flex flex-column justify-content-between"
+            >
+              <div class="card-body text-white">
+                <small class="card-meta mb-2">User Interface</small>
+                <h4 class="card-title mt-0 font-weight-bold">
+                  <a class="text-white text-decoration-none" href="#">Future Prediction</a>
+                </h4>
+                <p class="mt-2">
+                    AI predicts cloud costs and recommends optimal tools and instances to maximize efficiency and cut expenses.
+                </p>
+              </div>
+              <div class="card-footer bg-transparent border-top-0">
+                <div class="media">
+                  <img
+                    class="mr-3 rounded-circle"
+                    src="../assets/multicloud.jpg"
+                    alt="Tech Expert"
+                    style="max-width: 50px"
+                  />
+                  <div class="media-body">
+                    <h6 class="my-0 text-black">Tech Expert</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        class="btn main-btn btn-lg btn-primary mt-5 px-5 py-3 slide-up"
+        onclick="window.location.href='/login'"
+      >
+        Get Started
+      </button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>
